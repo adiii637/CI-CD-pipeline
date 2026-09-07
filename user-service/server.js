@@ -1,7 +1,7 @@
 // Load environment variables from .env file
 const dotenv = require("dotenv");
 dotenv.config();
-
+const userRoutes=require("./routes/user.routes")
 // Import required packages
 const express = require("express");
 const mongoose = require("mongoose");
@@ -11,7 +11,7 @@ const app = express();
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
-
+app.use("/api",userRoutes)
 // Function to connect to MongoDB using Mongoose
 const connectDB = async () => {
   // Use .env variable if provided, otherwise use a local default database URL

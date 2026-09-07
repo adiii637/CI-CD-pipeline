@@ -20,6 +20,6 @@ services:
     depends_on:
       - mongo
     restart: unless-stopped
-
+#vol is used to persist the data 
 volumes:
   mongo_data:
