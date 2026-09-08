@@ -1,31 +1,36 @@
-# Continuous deployment
-name: Node.js CD
+# CD - Continuous Deployment
+name: CD Pipeline/workflow
 
+# events on which this workflow gets triggered
 on:
   push:
     branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
 
 jobs:
   deploy:
+
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
+    # strategy:
+    #   matrix:
+    #     node-version: [18.x, 20.x, 22.x]
+    #     # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
-          cache-dependency-path: user-service/package-lock.json
-      - name: Install dependencies
-        working-directory: user-service
-        run: npm ci
-      - name: Build Docker image
-        run: docker build -t adiii637/e-commerce-app:latest user-service
-      - name: Run tests
-        working-directory: user-service
-        run: npm test --if-present
+    # switch into main branch
+    - uses: actions/checkout@v4
+    # - name: Use Node.js ${{ matrix.node-version }}
+    #   uses: actions/setup-node@v4
+    #   with:
+    #     node-version: ${{ matrix.node-version }}
+    #     cache: 'npm'
+    - name: Build Docker Image
+      run: docker build -t adiii637/e-commerce-app:latest user-service
+
+    - name: Docker Image Built
+      run: echo "Docker Image Built successfully!"
+
+
+

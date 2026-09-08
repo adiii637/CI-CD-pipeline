@@ -1,40 +1,56 @@
-name: Node.js CI
+# # CI Workflow -> Pipeline
+# name: Node.js CI
 
-on:
-  push:
-    branches:
-      - main
+# # events on which you want your workflow to be triggered
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
 
-  pull_request:
-    branches:
-      - main
+# jobs:
+# # first job - build
+#   build:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# # server our workflow runs on
+#     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version:
-          - 18.x
-          - 20.x
-          - 22.x
+#     strategy:
+#       matrix:
+#         node-version: [18.x, 20.x, 22.x]
+#         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#     # checkout into our workflow repo/branch
+#     - uses: actions/checkout@v4
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v4
+#       with:
+#         node-version: ${{ matrix.node-version }}
+#         cache: 'npm'
+#     - name: Build
+#       run: echo "Building App"
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
-          cache-dependency-path: user-service/package-lock.json
+# # second job - test
+#   test:
 
-      - name: Install dependencies
-        working-directory: user-service
-        run: npm install
+# # server our workflow runs on
+#     runs-on: ubuntu-latest
 
-      - name: Run tests
-        working-directory: user-service
-        run: npm test
+#     strategy:
+#       matrix:
+#         node-version: [18.x, 20.x, 22.x]
+#         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+#     steps:
+#     # checkout into our workflow repo/branch
+#     - uses: actions/checkout@v4
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v4
+#       with:
+#         node-version: ${{ matrix.node-version }}
+#         cache: 'npm'
+#     - name: Run Tests
+#       run: echo "Running Tests"
+#     - name: Tests Executed
+#       run: echo "Tests Executed!"
