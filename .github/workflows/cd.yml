@@ -19,7 +19,7 @@ jobs:
     #     # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    # switch into main branch
+    # Switch into main branch
     - uses: actions/checkout@v4
     # - name: Use Node.js ${{ matrix.node-version }}
     #   uses: actions/setup-node@v4
@@ -30,7 +30,14 @@ jobs:
       run: docker build -t adiii637/e-commerce-app:latest user-service
 
     - name: Docker Image Built
-      run: echo "Docker Image Built successfully!"
+      run: echo "Docker image built successfully."
+
+    - name: Login to Docker
+      run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+    - name: Push Image to Docker Hub
+      run: docker push adiii637/e-commerce-app:latest
+
 
 
 
